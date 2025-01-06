@@ -39,5 +39,5 @@ jobs:
       run: |
         gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.BIG_SECRET_PASSWORD }}" \
         --output tests_master/test_calculator_master.py tests_master/encrypted_test_calculator_master.py.gpg
-        pytest master_tests/
+        pytest tests_master/
 
