@@ -38,6 +38,6 @@ jobs:
     - name: Run master tests
       run: |
         gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.BIG_SECRET_PASSPHRASE }}" \
-        --output master_tests/test_calculator_master.py master_tests/encrypted_test_calculator_master.py.gpg
+        --output master_tests/test_calculator_master.py tests_master/encrypted_test_calculator_master.py.gpg
         pytest master_tests/
 
