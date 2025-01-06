@@ -38,8 +38,8 @@ jobs:
       run: |
         cat coverage.json | python -c "import sys, json; print(json.load(sys.stdin)['totals']['percent_covered'])"
 
-    - name: Run master tests
-      if: ${{ github.event.date > env.HOMEWORK_DEADLINE }}
+    - name: Run master tests if we are after the deadline
+      if: ${{ (date +%Y-%m-%d) > env.HOMEWORK_DEADLINE }}
       run: |
         gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.BIG_SECRET_PASSWORD }}" \
         --output tests_master/test_person_master.py tests_master/encrypted_test_person_master.py.gpg
