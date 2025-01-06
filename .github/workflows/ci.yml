@@ -29,14 +29,14 @@ jobs:
 
     - name: Run tests with coverage
       run: |
-        pytest --cov=src --cov-report=json > coverage.json
+        pytest --cov=src --cov-report=json tests/
 
     - name: Extract total coverage
       run: |
-        python -c '
+        python3 -c '
 import json
 with open("coverage.json", "r") as f:
     coverage_data = json.load(f)
-    total_coverage = coverage_data["totals"]["lines"]["covered"] / coverage_data["totals"]["lines"]["total"] * 100
-    print(f"Total coverage: {total_coverage:.2f}%")
+    total_coverage = coverage_data["totals"]["percent_covered"]
+    print(f"Total coverage: {total_coverage:.1f}%")
 '
