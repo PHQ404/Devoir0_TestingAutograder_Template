@@ -33,5 +33,4 @@ jobs:
 
     - name: Extract total coverage
       run: |
-        cat coverage.json
-        python -c "import sys, json; print(json.load(sys.stdin)['totals']['percent_covered'])"
+        cat coverage.json | python -c "import sys, json; print(json.load(sys.stdin)['totals']['percent_covered'])"
