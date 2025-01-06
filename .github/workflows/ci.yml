@@ -27,10 +27,17 @@ jobs:
         pip install -r requirements.txt
         pip install pytest pytest-cov
 
-    - name: Run tests with coverage
+    - name: Run students' tests with code coverage
       run: |
         pytest --cov=src --cov-report=json tests/
 
-    - name: Extract total coverage
+    - name: Extract students' total code coverage over their tests
       run: |
         cat coverage.json | python -c "import sys, json; print(json.load(sys.stdin)['totals']['percent_covered'])"
+
+    - name: Run master tests
+      run: |
+        gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.BIG_SECRET_PASSPHRASE }}" \
+        --output master_tests/test_calculator_master.py encrypted_test_calculator_master.py.gpg
+        pytest master_tests/
+
