@@ -27,8 +27,9 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
         pip install pytest pytest-cov
+        pip install pylint
+        pip install -r requirements.txt
 
     - name: Run students' tests
       run: |
@@ -37,6 +38,11 @@ jobs:
     - name: Read code coverage over students' tests
       run: |
         cat coverage.json | python -c "import sys, json; print(json.load(sys.stdin)['totals']['percent_covered'])"
+
+    - name: Read the students' PEP8 score with `pylint`
+      run: |
+        pylint src/ --fail-under=8.0
+        pylint_score=$(pylint src/ | grep -E 'Your code has been rated at' | awk '{print $5}')
 
     - name: Get current date
       id: date
