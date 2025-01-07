@@ -39,7 +39,7 @@ jobs:
         cat coverage.json | python -c "import sys, json; print(json.load(sys.stdin)['totals']['percent_covered'])"
 
     - name: Get current date
-      id: name
+      id: date
       run: echo "current_date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
 
     - name: Run master tests if we are after the deadline
