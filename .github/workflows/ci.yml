@@ -14,6 +14,7 @@ jobs:
 
     env:
       HOMEWORK_DEADLINE: "2024-10-01"  # Set the homework deadline here with this format: "<Year>-<Month>-<Day>"
+      CURRENT_DATE: $(date +'%Y-%m-%d')
 
     steps:
     - name: Checkout repository
@@ -45,12 +46,12 @@ jobs:
         pylint_score=$(pylint src/ | grep -E 'Your code has been rated at' | awk '{print $7}' | cut -d '/' -f 1)
         echo "Pylint Score: ${pylint_score}"
 
-    - name: Get current date
-      id: date
-      run: echo "current_date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+    # - name: Get current date
+    #   id: date
+    #   run: echo "current_date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
 
     - name: Run master tests if we are after the deadline
-      if: ${{ steps.date.outputs.current_date > env.HOMEWORK_DEADLINE }}
+      if: ${{ env.CURRENT_DATE > env.HOMEWORK_DEADLINE }}
       run: |
         gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.BIG_SECRET_PASSWORD }}" \
         --output tests_master/test_person_master.py tests_master/encrypted_test_person_master.py.gpg
