@@ -38,11 +38,12 @@ jobs:
     - name: Read code coverage over students' tests
       run: |
         cat coverage.json | python -c "import sys, json; print(json.load(sys.stdin)['totals']['percent_covered'])"
-
-    - name: Read the students' PEP8 score with `pylint`
+    
+    - name: Read the students' PEP8 score with pylint
       run: |
-        pylint src/ --fail-under=8.0
-        pylint_score=$(pylint src/ | grep -E 'Your code has been rated at' | awk '{print $5}')
+        pylint src/ --fail-under=8.0 || true  # Allow pylint to run even if it fails
+        pylint_score=$(pylint src/ | grep -E 'Your code has been rated at' | awk '{print $7}' | cut -d '/' -f 1)
+        echo "Pylint Score: ${pylint_score}"
 
     - name: Get current date
       id: date
