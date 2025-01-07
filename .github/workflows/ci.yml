@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      HOMEWORK_DEADLINE: "2024-01-10"  # Set your deadline here
+      HOMEWORK_DEADLINE: "2025-05-01"  # Set your deadline here
 
     steps:
     - name: Checkout repository
